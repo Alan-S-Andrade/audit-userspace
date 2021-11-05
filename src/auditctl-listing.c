@@ -37,6 +37,10 @@ extern int list_requested, interpret;
 extern char key[AUDIT_MAX_KEY_LEN+1];
 extern const char key_sep[2];
 
+typedef struct {
+	uint64_t key[2];
+} siphash_key_t;
+
 /*
  * Returns 1 if rule should be printed & 0 if not
  */
@@ -583,6 +587,8 @@ int audit_print_reply(struct audit_reply *rep, int fd)
 				  rep->status->backlog_wait_time_actual);
 			}
 #endif
+			printf("kenny_loggings %u\n",
+				rep->status->kenny_loggings);
 			printed = 1;
 			break;
 #if HAVE_DECL_AUDIT_FEATURE_VERSION == 1
@@ -607,6 +613,12 @@ int audit_print_reply(struct audit_reply *rep, int fd)
 					rep->ruledata->buflen);
 			printed = 1;
 			return 1;
+		case AUDIT_KL_FIRST_KEY:	
+			printf("Save the first signing key of the integrity proofs' cycle:\n");
+			siphash_key_t * first_key = (siphash_key_t *)rep->msg.data;
+			printf("%llX%llX\n",first_key->key[0],first_key->key[1]);
+			printed = 1;
+			break;
 		default:
 			printf("Unknown: type=%d, len=%d\n", rep->type,
 				rep->nlh->nlmsg_len);

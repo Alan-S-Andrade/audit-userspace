@@ -610,6 +610,21 @@ extern int  audit_set_loginuid_immutable(int fd)
 #endif
 }
 
+int  audit_set_kenny_loggings(int fd, uint32_t state)
+{
+	int rc;
+	struct audit_status s;
+
+	memset(&s, 0, sizeof(s));
+	s.mask    = AUDIT_STATUS_KENNY_LOGGINGS;
+	s.kenny_loggings = state;
+	rc = audit_send(fd, AUDIT_SET, &s, sizeof(s));
+	if (rc < 0)
+		audit_msg(audit_priority(errno), 
+			"Error sending enable KL request (%s)", strerror(-rc));
+	return rc;
+}
+
 #define AUDIT_FEATURES_UNSET 0xFFFFFFFF
 #define AUDIT_FEATURES_UNSUPPORTED 0xEFFFFFFF
 static uint32_t features_bitmap = AUDIT_FEATURES_UNSET;
