@@ -650,7 +650,7 @@ int audit_reset_lost(int fd);
 int audit_reset_backlog_wait_time_actual(int fd);
 extern int  audit_set_feature(int fd, unsigned feature, unsigned value, unsigned lock);
 extern int  audit_set_loginuid_immutable(int fd);
-extern int  audit_set_kenny_loggings(int fd, uint32_t value);
+extern int  audit_set_integrity_proofs(int fd, uint32_t value);
 
 /* AUDIT_LIST_RULES */
 extern int  audit_request_rules_list_data(int fd);

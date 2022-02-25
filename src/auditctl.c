@@ -148,7 +148,7 @@ static void usage(void)
 #if HAVE_DECL_AUDIT_STATUS_BACKLOG_WAIT_TIME_ACTUAL == 1
      "    --reset_backlog_wait_time_actual  Reset the actual backlog wait time counter\n"
 #endif
-     "    --KL [0,1]                        Set Kenny Loggings integrity proofs\n"
+     "    --integrity_proofs [0,1]          Set integrity proofs\n"
      );
 }
 
@@ -558,7 +558,7 @@ static struct option long_opts[] =
   {"reset_backlog_wait_time_actual", 0, NULL, 4},
 #endif
   {"signal", 1, NULL, 5},
-  {"KL", 1, NULL, 6},
+  {"integrity_proofs", 1, NULL, 6},
   {NULL, 0, NULL, 0}
 };
 
@@ -1130,7 +1130,7 @@ process_keys:
 	case 6:
 		if (optarg && ((strcmp(optarg, "0") == 0) ||
 				(strcmp(optarg, "1") == 0))) {
-			if (audit_set_kenny_loggings(fd, strtoul(optarg,NULL,0)) > 0) {
+			if (audit_set_integrity_proofs(fd, strtoul(optarg,NULL,0)) > 0) {
 				/* Wait, receive, and print to stdout (if first key generated) */
 				audit_request_status(fd);
 			} else  {

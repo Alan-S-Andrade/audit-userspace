@@ -610,18 +610,18 @@ extern int  audit_set_loginuid_immutable(int fd)
 #endif
 }
 
-int  audit_set_kenny_loggings(int fd, uint32_t state)
+int  audit_set_integrity_proofs(int fd, uint32_t state)
 {
 	int rc;
 	struct audit_status s;
 
 	memset(&s, 0, sizeof(s));
-	s.mask    = AUDIT_STATUS_KENNY_LOGGINGS;
-	s.kenny_loggings = state;
+	s.mask    = AUDIT_STATUS_INTEGRITY_PROOFS;
+	s.integrity_proofs = state;
 	rc = audit_send(fd, AUDIT_SET, &s, sizeof(s));
 	if (rc < 0)
 		audit_msg(audit_priority(errno), 
-			"Error sending enable KL request (%s)", strerror(-rc));
+			"Error sending enable integrity proofs request (%s)", strerror(-rc));
 	return rc;
 }
 

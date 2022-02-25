@@ -587,8 +587,8 @@ int audit_print_reply(struct audit_reply *rep, int fd)
 				  rep->status->backlog_wait_time_actual);
 			}
 #endif
-			printf("kenny_loggings %u\n",
-				rep->status->kenny_loggings);
+			printf("integrity_proofs %u\n",
+				rep->status->integrity_proofs);
 			printed = 1;
 			break;
 #if HAVE_DECL_AUDIT_FEATURE_VERSION == 1
@@ -613,7 +613,7 @@ int audit_print_reply(struct audit_reply *rep, int fd)
 					rep->ruledata->buflen);
 			printed = 1;
 			return 1;
-		case AUDIT_KL_FIRST_KEY:	
+		case AUDIT_INTEGRITY_PROOFS_FIRST_KEY:	
 			printf("Save the first signing key of the integrity proofs' cycle:\n");
 			siphash_key_t * first_key = (siphash_key_t *)rep->msg.data;
 			printf("%llX%llX\n",first_key->key[0],first_key->key[1]);
